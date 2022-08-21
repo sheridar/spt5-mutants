@@ -1,0 +1,59 @@
+#===== Config file for finding pauses from mNET-seq data =======================
+
+# Directory to store results. This must be the same directory used to run
+# the mNET-seq processing pipeline.
+RESULTS:
+    "results"
+
+
+# Path to chrom.sizes file
+CHROMS:
+    "path/to/chrom.sizes"
+
+
+# Path to genome fasta file
+FASTA:
+    "path/to/file.fa"
+
+
+# Path to bed file containing regions to use for identifying pauses.
+GENES:
+    "path/to/genes.bed.gz"
+
+
+# Path to bed file containing regions to exclude from analysis. Pauses
+# overlapping these regions will be excluded from downstream analysis. 
+MASK_REGION:
+    - "path/to/snoRNAs.bed.gz"
+    - "path/to/5ss.bed.gz"
+    - "path/to/3ss.bed.gz"
+
+
+# Window sizes to use for finding pauses
+# provide multiple sizes to generate results for multiple different window sizes
+WIN_SIZE:
+    - 200
+
+
+# File label to use for strong pauses
+STRENGTH_GROUPS:
+    - "_strong_"
+
+
+# Maximum searching round for strong pauses
+PAUSE_ROUND:
+    - 1
+
+
+# Bed files for creating metaplots
+META_BEDS:
+    5-TSS-100bp:   "path/to/GRCh38_5_TSS_+100bp.bed.gz"
+    5-100bp-300bp: "path/to/GRCh38_5_+100bp_+300bp.bed.gz"
+    5-300bp-500bp: "path/to/GRCh38_5_+300bp_+500bp.bed.gz"
+    5-500bp-1kb:   "path/to/GRCh38_5_+500bp_+1kb.bed.gz"
+    4-200bp:       "path/to/GRCh38_4_TSS_pAS_200bp.bed.gz"
+    5-10bp:        "path/to/GRCh38_5_-2kb_+2kb_10bp.bed.gz"
+    5-50bp:        "path/to/GRCh38_5_-5kb_+5kb_50bp.bed.gz"
+    3-50bp:        "path/to/GRCh38_3_-5kb_+5kb_50bp.bed.gz"
+
+

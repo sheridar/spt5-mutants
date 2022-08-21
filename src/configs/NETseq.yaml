@@ -1,0 +1,104 @@
+#===== Config file for filtering and aligning mNET-seq reads ===================
+
+# Directories containing fastq files, this can be a relative path.
+# Multiple directories can be provided. The sample names must correspond
+# to the beginning of the fastq name.
+RAW_DATA:
+    - "folder/containing/fastqs"
+    - "another/folder/containing/fastqs"
+
+
+# Directory to store results
+RESULTS:
+    "results"
+
+
+# Path to bowtie2 index
+INDEX:
+    "path/to/index/GRCh38"
+
+
+# Path to chrom.sizes file
+CHROMS:
+    "path/to/chrom.sizes"
+
+
+# Path to GTF file
+GTF:
+    "path/to/gtf/Homo_sapiens.GRCh38.95.gtf"
+
+
+# Path to bed file containing regions to use for downstream analysis.
+# Reads not overlapping these regions will be removed. Since lower quality
+# mNET-seq libraries will have more reads aligning in intergenic regions,
+# we decided to only use reads that fall with +/-5 kb of a protein coding
+# gene.
+GENES:
+    "path/to/file.bed.gz"
+
+
+# Path to bed file containing regions to exclude from analysis. Reads
+# overlapping these regions will be removed. Since lower quality mNET-seq
+# libraries will have more reads aligning to snoRNAs, we decided to remove
+# these reads before performing downstream analysis
+MASK:
+    "path/to/snoRNAs.bed.gz"
+
+
+# Parameters for URLs
+# base URL to use for IGV session, must be publicly accessible
+# ssh info to use for transferring files for IGV session
+URL:
+    "http://my_url.com/user1/my_project"
+
+SSH:
+    "user1@server:~/public/my_project"
+
+
+# Regions to use for testing output files from per-gene subsampling. This
+# will double check that each gene in the provided bed file has the same
+# number of overlapping reads for each sample in the subsampling group. This
+# list cannot include overlapping genes, since read counts for
+# overlapping genes may differ between samples in the subsampling group.
+TEST_GENES:
+    "path/to/nonoverlapping_genes.bed.gz"
+
+
+# Bed files to use for counting mNET-seq reads, the resulting output files
+# can be used for downstream analysis. For each bed file, provide a unique
+# name to use for naming output files.
+META_BEDS:
+    5-TSS-100bp:   "path/to/GRCh38_5_TSS_+100bp.bed.gz"
+    5-100bp-300bp: "path/to/GRCh38_5_+100bp_+300bp.bed.gz"
+    5-300bp-500bp: "path/to/GRCh38_5_+300bp_+500bp.bed.gz"
+    5-500bp-1kb:   "path/to/GRCh38_5_+500bp_+1kb.bed.gz"
+    4-200bp:       "path/to/GRCh38_4_TSS_pAS_200bp.bed.gz"
+    5-10bp:        "path/to/GRCh38_5_-2kb_+2kb_10bp.bed.gz"
+    5-50bp:        "path/to/GRCh38_5_-5kb_+5kb_50bp.bed.gz"
+    3-50bp:        "path/to/GRCh38_3_-5kb_+5kb_50bp.bed.gz"
+
+
+## Parameters for various commands
+# Cutadapt
+# --pair-filter=first - read filtering decisions are made based solely on R1
+# --dicard-untrimmed  - remove reads that do not contain an adapter
+# --minimum-length    - remove reads that are shorter than given value
+# -O                  - minimum overlap to trim adapter
+# -a                  - adapter sequence for R1
+# -A                  - adapter sequence for R2
+#
+# umi tools
+# --method unique     - only remove read if the UMI sequence is an exact match
+# --read-length       - use read length when removing duplicates
+#
+# featureCounts
+# -s 0                - strandedness for read assignment; 0, unstranded
+# -t gene             - feature type for counting
+# -O                  - count if aligned to multiple features
+CMD_PARAMS:
+    cutadapt:      " --pair-filter=first --discard-untrimmed --minimum-length 20 -O 10 -a 'AACTGTAGGCACCATCAAT' -A 'GATCGTCGGACTGTAGAACTCTGAAC' "
+    umi_pattern:   "NNNNNNNNNNNN"
+    umi_tools:     " --method unique --read-length "
+    featureCounts: " --extraAttributes 'gene_name,gene_biotype' -s 0 -t gene -O "
+
+

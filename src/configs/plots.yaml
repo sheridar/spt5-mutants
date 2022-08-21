@@ -1,0 +1,32 @@
+### Sample information ###
+# The top level name should be the desired section name.
+# The file prefixes should then be grouped based on subsampling group, with
+# the names corresponding to the subsampling group name.
+# Each file prefix should be given a name that will be used for plotting. The
+# name should include the replicate label at the end separated by an
+# underscore.
+#
+# section_name:
+#   subsampling_group_1:
+#     sample-1_r1: file_prefix_sample_1_rep_1
+#     sample-2_r1: file_prefix_sample_2_rep_1
+# 
+#   subsampling_group_2:
+#     sample-1_r2: file_prefix_sample_1_rep_2
+#     sample-2_r2: file_prefix_sample_2_rep_2
+# 
+samples:
+  Spt5:
+    Spt5-r1:
+      +Spt5_r1: "NF_CB33plusTMP_mNETseq_QIAseq"
+      -Spt5_r1: "NF_CB33minusTMP_mNETseq_QIAseq"
+
+    Spt5-r2:
+      +Spt5_r2: "NF_CB33plusTMP_mNETseq_Sample2"
+      -Spt5_r2: "NF_CB33minusTMP_mNETseq_Sample2"
+
+
+### Plot colors ###
+colors:
+  Spt5: ["black", "#E62D30"]
+

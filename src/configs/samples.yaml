@@ -1,0 +1,42 @@
+#===== Config file containing samples ==========================================
+# This gets appended to mNET-seq and pausing configs
+
+
+# Project name to use for summary files
+PROJ:
+    "Spt5"
+
+
+# Regions to use for subsampling reads
+# The samples in each group will be subsampled to the same read depth for
+# the provided regions. These files should be bed files with the regions
+# containing the regions to use for each gene.
+GENE_SUBSAMPLE_BEDS:
+    body: "path/to/GRCh38_body.bed.gz"
+    gene: "path/to/GRCh38_genes.bed.gz"
+
+
+# Sample groups to use for subsampling, use the following format. The
+# samples included in each group will be subsampled to the same read
+# depth, so for each group select samples you want to directly compare.
+# The sample names must match the beginning of a fastq file in one of the
+# directories listed under RAW_DATA in NETseq.yaml. If the sample name
+# matches multiple fastqs, you will receive an error.
+# 
+# group-name-1:
+#     - "sample_1_file_prefix"
+#     - "sample_2_file_prefix"
+#
+# group-name-2:
+#     - "sample_3_file_prefix"
+#     - "sample_4_file_prefix"
+#
+SAMPLES:
+    Spt5-r1:
+        - "NF_CB33plusTMP_mNETseq_QIAseq"
+        - "NF_CB33minusTMP_mNETseq_QIAseq"
+
+    Spt5-r2:
+        - "NF_CB33plusTMP_mNETseq_Sample2"
+        - "NF_CB33minusTMP_mNETseq_Sample2"
+
